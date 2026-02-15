@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pour mon Valentin d'exception ❤️</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a1a, #4a0e0e);
+            font-family: 'Georgia', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            color: #f4e4bc;
+            text-align: center;
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 50px;
+            border-radius: 15px;
+            border: 1px solid #d4af37;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            width: 85%;
+            max-width: 500px;
+            position: relative;
+        }
+        h1 { font-size: 2.2em; font-style: italic; margin-bottom: 40px; }
+        .buttons-wrapper {
+            position: relative;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        button { 
+            padding: 12px 35px; 
+            font-size: 1.1em; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            transition: transform 0.1s;
+            border: 1px solid #d4af37;
+            width: 180px;
+        }
+        #yesBtn { background-color: #d4af37; color: #1a1a1a; font-weight: bold; }
+        #noBtn { 
+            background-color: #f44336; 
+            color: white; 
+            position: absolute; 
+            z-index: 10; 
+            border: none;
+        }
+        .message-final { display: none; line-height: 1.8; animation: fadeIn 1.5s; }
+        .message-final h2 { color: #d4af37; font-size: 1.8em; }
+        #audioContainer { display: none; } /* Cache complètement la vidéo */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="quiz-content">
+        <h1>Voudrais-tu me faire l'honneur d'être mon Valentin ?</h1>
+        <div class="buttons-wrapper">
+            <button id="yesBtn">Avec plaisir</button>
+            <button id="noBtn">Non</button>
+        </div>
+    </div>
+
+    <div id="message-final" class="message-final">
+        <h2>Je n'en attendais pas moins de toi... 😍</h2>
+        <p>À l'homme exceptionnel que tu es, merci d'illuminer mon quotidien par ta présence et ta prestance.</p>
+        <p>C'est un immense bonheur de t'avoir à mes côtés, et je tenais à ce que tu saches à quel point tu es spécial pour moi.</p>
+        <p>Prépare-toi, car cette journée sera à la hauteur de ton élégance. ❤️</p>
+    </div>
+</div>
+
+<div id="audioContainer">
+    <div id="player"></div>
+</div>
+
+<script>
+    // Chargement de l'API YouTube
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            height: '0',
+            width: '0',
+            videoId: 'nrSfTLrrpe8', // Ton lien Amadeus
+            playerVars: {
+                'autoplay': 0,
+                'loop': 1,
+                'playlist': 'nrSfTLrrpe8'
+            }
+        });
+    }
+
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const quizContent = document.getElementById('quiz-content');
+    const messageFinal = document.getElementById('message-final');
+
+    const escapeButton = () => {
+        const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+        const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+        noBtn.style.position = 'fixed';
+        noBtn.style.left = x + 'px';
+        noBtn.style.top = y + 'px';
+    };
+
+    noBtn.addEventListener('mouseover', escapeButton);
+
+    yesBtn.addEventListener('click', () => {
+        quizContent.style.display = 'none';
+        noBtn.style.display = 'none';
+        messageFinal.style.display = 'block';
+        if (player) {
+            player.playVideo(); // Lance uniquement le son
+        }
+    });
+</script>
+
+</body>
+</html>
